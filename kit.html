@@ -5,13 +5,21 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
-  
-<section class="toc">
+
+<section id="cover">
+  The Cover
+</section>
+
+<section id="toc">
   <h1>Table of Contents</h1>
   <ol>
     <li><a href="#intro">Introduction</a></li>
     <li><a href="#step-1">Step 1 <span class="subtitle">Preparing for a Hack Jam</span></a></li>
-    <li><a href="#step-2">Step 2 <span class="subtitle">Something</span></a></li>
+    <li><a href="#step-2">Step 2 <span class="subtitle">Choose a Theme and Set Learning Goals</span></a></li>
+    <li><a href="#step-3">Step 3 <span class="subtitle">Design the Lesson Plan</span></a></li>
+    <li><a href="#step-4">Step 4 <span class="subtitle">Set Up for Success</span></a></li>
+    <li><a href="#step-5">Step 5 <span class="subtitle">Work in Teams and Share</span></a></li>
+    <li><a href="#resources">Resources</a></li>
   </ol>
 </section>
 
@@ -190,6 +198,105 @@ and resources to help you facilitate youth events and/or classes that have a foc
     </p>
   </section>
   
+  <section>
+    <h3>What is CSS?</h3>
+    <p>
+    	HTML gives a page structure and meaning, but it’s still quite abstract because it’s meant to be consumed by all kinds of people using all kinds of media. When you want to give a page style that’s specific to a particular medium, you use a different language called CSS.
+    </p>
+    <p>
+      One easy way to tinker with CSS is by adding a style attribute to elements in your HTML. The contents of this attribute are CSS properties that tell a computer how to style the element. For example, we can use the color CSS property to set text color:
+    </p>
+    <pre><code>I can &lt;em style="color: red"&gt;hear&lt;/em&gt; you!</code></pre>
+
+    <p>
+      This will cause the word “hear” to be red. We can add more properties by separating them with semicolons, like so:
+    </p>
+    <pre><code>I can &lt;em style="color: red; background: pink"&gt;hear&lt;/em&gt; you!</code></pre>
+
+    <p>
+      This will cause the word “hear” to be red and have a pink background.
+    </p>
+    <p>
+      Playing with CSS properties can be lots of fun. You can see a full list of them here: https://developer.mozilla.org/en/CSS_Reference
+    </p>
+
+    <p>
+      But what about when you want to make all &lt;em&gt; elements be styled this way? It sure is tedious to add the same style attribute to every occurrence, and this approach also makes it hard to change all the styles at once when you want to tinker. This is where CSS stylesheets come in, and they’re actually what most webpages use—but they’re also out of the scope of this tiny guide.
+    </p>
+  </section>
 </section>
+
+<section class="chapter" id="step-2">
+  <h1>Step 2</h1>
+  <h2>Choose a Theme and Set Learning Goals</h2>
+  
+  <p>
+    Identify what the big picture learning objectives are for the event so that you can begin to craft a design challenge. Remember, the technology or media should not be the theme of the jam, just a strategy for implementation.
+  </p>
+  <p>
+    The goal of every hack jam should be to make something. At one jam, Hacking Citizen Science on Earth Day, participants collected data about their carbon footprint, compiled that info into websites in a virtual online world, and linked their websites to an interactive game website that the New York Hall of Science had set up for the event. Meanwhile, at an Entrepreneurship 101 jam, teen designers used the Hackasaurus tools to set up websites for their budding inventions and businesses.
+  </p>
+
+  <p>
+    Set clear learning objectives and goals for out- comes so that both the youth and facilitators know
+the expectations going into the jam. Reinforce this with publicity efforts and messaging around the event.
+  </p>
+
+  <aside>
+    Tip: If you are a teacher in a school, think about how you can integrate a lesson plan utilizing Hackasaurus tools into your curriculum. 
+  </aside>
+  
+  <section>
+    <h2>Learning Objectives</h2>
+    
+    <p>
+      Your event or class should have specific, targeted learning objectives. Here are some of the learning goals for the Hackasaurus project you may wish to borrow or put in your own words.
+    </p>
+    <dl>
+      <dt>Browser basics:</dt> 
+      <dd>skills required for “retrieving, presenting and traversing information resources on the world wide web” (wikipedia definition). These include:
+        <ul>
+          <li>Identifying where the address bar is within the browser</li>
+          <li>Demonstrating basic ability to tweak the address bar URL</li>
+          <li>Opening multiple browser tabs and switching among them</li>
+          <li>Mastering basic selection of content on a webpage/address bar</li>
+          <li>Mastering “copy” and “paste” function via keyboard shortcuts</li>
+          <li>Using the mouse to point, click, secondary-click (a.k.a. right click) and scroll over objects on the webpage</li>
+          <li>Being able to type non-alphanumeric characters like @, &amp;, &lt;, etc.</li>
+        </ul>
+      </dd>
+      <dt>Web authoring:</dt> 
+      <dd>skills required for making content and publishing to the world wide web. They include:
+        <ul>
+          <li>Understanding the distinction between resource types, e.g. image URLs vs. webpage URLs</li>
+          <li>Identifying and altering element tags, which surround content and apply meaning to it</li>
+          <li>Remixing and creating elements, which are the blocks of code that make up webpages</li>
+          <li>Demonstrating the ability to write a paragraph using HTML and the &lt;p&gt; &lt;/p&gt; tags</li>
+          <li>Defining the term CSS (cascading style sheets)</li> 
+          <li>Defining the term url (uniform resource locator) and demonstrating ability to locate the webpage url within the browser</li>
+          <li>Understanding what the open web means</li>
+          <li>Understanding that the web can always be made less open/less free e.g. through firewalls or other methods</li>
+          <li>Understanding what ethical webmaking means</li>
+        </ul>
+      </dd>
+      <dt>Tool Competencies:</dt> 
+      <dd>skills that demonstrate comfort and competency of the Hackasaurus toolkit, including:
+        <ul>
+          <li>Installing and using a bookmarklet</li>
+          <li>Installing and using an add-on</li>
+          <li>Inspecting the HTML and/or CSS of an element on a webpage by using the X-Ray Goggles</li>
+          <li>Changing webpage content locally by hacking</li>
+          <li>Sharing webpage content by sharing a hack</li>
+          <li>Demonstrating ability to impact the design of a webpage by changing compositional elements (i.e: header, footer, background, navigation)</li> 
+          <li>Building webpages using HTML in WebPad</li>
+          <li>Demonstrating an understanding that there are resources available on the web for developers by using HTML or CSS snippets from the Hackbook</li> 
+          <li>Demonstrating ability to work collaboratively by coding HTML and/or CSS with a peer</li>
+          <li>Demonstrating ability to create web content that is accessible for other users</li>
+        </ul>
+      </dd>
+    </dl>
+  </section>
+</section>
+
 </body>
 </html>
