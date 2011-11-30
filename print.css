@@ -1,0 +1,26 @@
+/* Pagination */
+
+.chapter { page-break-before: always; }
+
+.chapter section { page-break-inside: avoid; }
+
+pre { 
+  page-break-inside: avoid;
+  page-break-before: avoid; 
+}
+
+h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
+
+/* TOC */
+
+.toc a[href]:after {
+	content: leader('.') target-counter(attr(href), page);
+}
+
+/* Headers & Footers */
+
+@page {
+  @bottom-left {
+    content: "© 2011 by individual mozilla.org contributors. Content available under a Creative Commons license. http://www.mozilla.org/foundation/licensing/website-content.html";
+  }
+}

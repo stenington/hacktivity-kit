@@ -1,7 +1,0 @@
-a[href] {
-	content: prince-script(foo, attr(href));
-}
-
-.toc {
-	border: 1px solid red;
-}

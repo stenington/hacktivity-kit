@@ -7,13 +7,15 @@
 <body>
   
 <section class="toc">
-  <ul>
-    <li>Introduction</li>
-    <li><a href="#step-1">Step 1</a></li>
-  </ul>
+  <h1>Table of Contents</h1>
+  <ol>
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#step-1">Step 1 <span class="subtitle">Preparing for a Hack Jam</span></a></li>
+    <li><a href="#step-2">Step 2 <span class="subtitle">Something</span></a></li>
+  </ol>
 </section>
 
-<section class="chapter">
+<section class="chapter" id="intro">
   <h1>Introduction</h1>
   
   <section>
@@ -59,14 +61,14 @@ and resources to help you facilitate youth events and/or classes that have a foc
   </section>
 </section>
 
-<section class="chapter">
-  <h1 id="step-1">Step 1</h1>
+<section class="chapter" id="step-1">
+  <h1>Step 1</h1>
   <h2>Preparing for a Hack Jam</h2>
   <p>
 	  Planning and facilitating a meeting or event should not be a solo affair. Invite youth and facilitators who have experience in the field and/or working with kids and team up with them to develop a game plan or curriculum for the day of the hack jam. You may also want to have some people with technical skills on hand to troubleshoot as well as to act as a creative support team.
   </p>
   <p>
-	  In Resources you’ll find a recruitment poster and volunteer sign-up form you can photocopy and ￼distribute. You’ll want to be personally well-prepared for the day as well. If you’re not already comfortable or familiar with webmaking, ￼check out HTML and CSS Basics.
+	  In Resources you’ll find a recruitment poster and volunteer sign-up form you can photocopy and distribute. You’ll want to be personally well-prepared for the day as well. If you’re not already comfortable or familiar with webmaking, check out HTML and CSS Basics.
   </p>
   <aside>Tip: Consider approaching local universities or tech organizations to act as on-site mentors.</aside>
     
@@ -143,9 +145,7 @@ and resources to help you facilitate youth events and/or classes that have a foc
     <p>
 	    HTML is a special language used to tell computers how to build webpages so that humans can consume them. Here’s a really simple web page:
     </p>
-    <pre><code>
-I can &lt;em&gt;hear&lt;/em&gt; you!
-    </code></pre>
+    <pre><code>I can &lt;em&gt;hear&lt;/em&gt; you!</code></pre>
 
     <p>
       People with vision will see this page as a single line of text with the word hear italicized. That’s because the word is wrapped in what we call tags that tell the computer to emphasize anything between them. If a blind person were listening to the webpage, a computerized voice might place emphasis on the word hear instead.
@@ -158,9 +158,7 @@ I can &lt;em&gt;hear&lt;/em&gt; you!
     <p>
       There are many kinds of elements. Aside from the &lt;em&gt; element, one of the most useful elements is &lt;a&gt;, which can be used like this:
 	  </p>
-	  <pre><code>
-&lt;a href="http://wikipedia.org"&gt;Wikipedia&lt;/a&gt; is cool.
-	  </code></pre>
+	  <pre><code>&lt;a href="http://wikipedia.org"&gt;Wikipedia&lt;/a&gt; is cool.</code></pre>
 
     <p>
       This element is slightly more complex because it includes an attribute, or piece of information that adds meaning to the element’s content. In this case, the href attribute tells a computer that “Wikipedia” is associated with—or hyperlinked to—the website wikipedia.org. That means clicking (or tapping) on the word will take the reader to Wikipedia’s website.
@@ -169,10 +167,8 @@ I can &lt;em&gt;hear&lt;/em&gt; you!
     <p>
       Some elements don’t actually contain any content, and hence have no closing tag, but represent special kinds of content themselves. One example is the &lt;img&gt; tag:
     </p>
-    <pre><code>
-This is serious!
-&lt;img src="http://seriouscat.com/serious_cat_is_serious.jpg"&gt;
-    </code></pre>
+    <pre><code>This is serious!
+&lt;img src="http://seriouscat.com/serious_cat_is_serious.jpg"&gt;</code></pre>
 
     <p>
       This takes an image of a cat from seriouscat.com and puts it in the webpage after the words “This is serious!”
@@ -181,11 +177,9 @@ This is serious!
     <p>
       Finally, it’s also possible to put elements inside each other, also known as nesting them:
     </p>
-    <pre><code>
-&lt;a href="http://en.wikipedia.org/wiki/Lolcat"&gt;
+    <pre><code>&lt;a href="http://en.wikipedia.org/wiki/Lolcat"&gt;
 &lt;img src="http://seriouscat.com/serious_cat_is_serious.jpg"&gt;
-&lt;/a&gt;
-    </code></pre>
+&lt;/a&gt;</code></pre>
 
     <p>
       This hyperlinks the picture of a cat to the Wikipedia entry on Lolcat.
