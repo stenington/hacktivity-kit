@@ -6,25 +6,8 @@
 </head>
 <body>
 
-<section id="cover">
-  The Cover
-</section>
-
-<section id="toc">
-  <h1>Table of Contents</h1>
-  <ol>
-    <li><a href="#intro">Introduction</a></li>
-    <li><a href="#step-1">Step 1 <span class="subtitle">Preparing for a Hack Jam</span></a></li>
-    <li><a href="#step-2">Step 2 <span class="subtitle">Choose a Theme and Set Learning Goals</span></a></li>
-    <li><a href="#step-3">Step 3 <span class="subtitle">Design the Lesson Plan</span></a></li>
-    <li><a href="#step-4">Step 4 <span class="subtitle">Set Up for Success</span></a></li>
-    <li><a href="#step-5">Step 5 <span class="subtitle">Work in Teams and Share</span></a></li>
-    <li><a href="#resources">Resources</a></li>
-  </ol>
-</section>
-
 <section class="chapter" id="intro">
-  <h1>Introduction</h1>
+  <h1 class="title">Introduction</h1>
   
   <section>
     <p>
@@ -70,8 +53,8 @@ and resources to help you facilitate youth events and/or classes that have a foc
 </section>
 
 <section class="chapter" id="step-1">
-  <h1>Step 1</h1>
-  <h2>Preparing for a Hack Jam</h2>
+  <h1 class="title">Step 1</h1>
+  <h2 class="subtitle">Preparing for a Hack Jam</h2>
   <p>
 	  Planning and facilitating a meeting or event should not be a solo affair. Invite youth and facilitators who have experience in the field and/or working with kids and team up with them to develop a game plan or curriculum for the day of the hack jam. You may also want to have some people with technical skills on hand to troubleshoot as well as to act as a creative support team.
   </p>
@@ -226,9 +209,9 @@ and resources to help you facilitate youth events and/or classes that have a foc
   </section>
 </section>
 
-<section class="chapter" id="step-2">
-  <h1>Step 2</h1>
-  <h2>Choose a Theme and Set Learning Goals</h2>
+<section class="chapter">
+  <h1 class="title">Step 2</h1>
+  <h2 class="subtitle">Choose a Theme and Set Learning Goals</h2>
   
   <p>
     Identify what the big picture learning objectives are for the event so that you can begin to craft a design challenge. Remember, the technology or media should not be the theme of the jam, just a strategy for implementation.
@@ -298,5 +281,43 @@ the expectations going into the jam. Reinforce this with publicity efforts and m
   </section>
 </section>
 
+<script type="text/javascript">
+
+if(document.body.hasChildNodes()) {
+  
+  var toc_section = document.createElement("section");
+  var toc = document.createElement("ol");
+  toc_section.appendChild(toc);
+  
+  var children = document.body.childNodes;
+  for(var i = 0; i < children.length; i++) {
+    var child = children[i];
+    if( child.nodeType == 1 && child.classList ) {
+      console.log("ok, in child with className " + child.className);
+      if( typeof child.id === 'undefined' || !child.id ){
+        child.id = "child" + i;
+      }
+      var text = "foo for now";
+      /*var titles = child.getElementsByClassName("title");
+      if( titles.length > 0 ){
+        text += titles[0].firstChild.nodeValue;
+      }
+      var subtitles = child.getElementsByClassName("subtitle");
+      if( subtitles.length > 0 ){
+        text += " " + subtitles[0].firstChild.nodeValue;
+      } */
+      console.log(text);
+      var toc_el = document.createElement("li");
+      var toc_link = document.createElement("a");
+      toc_link.setAttribute("href", "#" + child.id);
+      var toc_text = document.createTextNode(text);
+      toc_link.appendChild(toc_text);
+      toc_el.appendChild(toc_link);
+      toc.appendChild(toc_el);
+    }
+  }
+  document.body.insertBefore(toc_section, document.body.firstChild);
+}
+</script>
 </body>
 </html>

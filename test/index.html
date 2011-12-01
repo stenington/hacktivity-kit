@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Hacktivity Kit Unit Tests</title>
+<link rel="stylesheet" href="qunit.css">
+
+<script src="jquery.min.js"></script>
+<script src="qunit.js"></script>
+<script type="text/javascript">
+
+function buildTOC(root) {
+  var toc = document.createElement('ol');
+  var children = root.childNodes;
+  for(var i = 0; i < children.length; i++) {
+    var child = children[i];
+    if( child.nodeType == 1 ) {
+      var text = "";
+      var toc_line = document.createElement('li');
+      var toc_text = document.createTextNode('foo');
+      toc_line.appendChild(toc_text);
+      toc.appendChild(toc_line);
+    }
+  }
+  return toc;
+};
+
+$(document).ready(function(){
+  $('.test-case').each(function(test_case){
+    test("buildTOC", function(){
+      var expected = $('.expected-toc', test_case).children().get(0);
+      var root = $('.root', test_case).get(0);
+
+      var toc = buildTOC(root);
+
+      equal(toc.childNodes.length, 2, "TOC length");
+      $(expected).children().each(function(i, el){
+        equal($(toc).children().eq(i).text(), $(el).text(), "TOC line " + (i+1));
+      });
+      deepEqual(toc, expected, "full TOC");
+    });
+  });
+});
+
+
+</script>
+
+<h1 id="qunit-header">Web X-Ray Goggles Unit Tests</h1>
+<h2 id="qunit-banner"></h2>
+<div id="qunit-testrunner-toolbar"></div>
+<h2 id="qunit-userAgent"></h2>
+<ol id="qunit-tests"></ol>
+<div id="qunit-fixture">
+  
+  <div class="test-case">
+    <div class="root">
+      <section>
+        <span class="title">Chapter 1</span> 
+      </section>
+      <section>
+        <span class="title">Chapter 2</span>
+        <span class="subtitle">The second chapter</span>
+      </section>
+    </div>
+    <div class="expected-toc">
+      <ol>
+        <li>Chapter 1</li>
+        <li>Chapter 2 The second chapter</li>
+      </ol>
+    </div>
+  </div>
+
+</div>
