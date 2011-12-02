@@ -39,8 +39,15 @@
       return false;
     }
 
+    /* Only check for href's if they're defined on the expected node */
     if( expected.hasAttribute && expected.hasAttribute('href') ){
-      if( !actual.hasAttribute('href') || expected.getAttribute('href') !== actual.getAttribute('href') ){
+      /* href="*" means the actual must have an href, but it can be anything */
+      if( expected.getAttribute('href') === '*' ){
+        if( !(actual.hasAttribute && actual.hasAttribute('href')) ){
+          return false;
+        }
+      }
+      else if( !actual.hasAttribute('href') || expected.getAttribute('href') !== actual.getAttribute('href') ){
         console.log("expected href: [" + expected.getAttribute('href') + "], got href: [" + actual.getAttribute('href') + "]");
         return false;
       }
@@ -61,6 +68,10 @@
     if( expected.hasChildNodes() ){
       var expectedKids = normalizeChildren(expected.childNodes);
       var actualKids = normalizeChildren(actual.childNodes);
+      if( expectedKids.length != actualKids.length ) {
+        console.log("expected " + expectedKids.length + " child node(s), got " + actualKids.length);
+        return false;
+      }
       for(var i = 0; i < expectedKids.length; i++){
         if( !looksLike(actualKids[i], expectedKids[i]) ){
           return false;
@@ -68,7 +79,7 @@
       }
     }
     
-    return nodeLooksLike(expected, actual);
+    return nodeLooksLike(actual, expected);
   }
 
   console.log("\nColoring the tests...");
