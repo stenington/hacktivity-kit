@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="lib/colorTests.css">
+<style type="text/css">
+.root, .expected, .actual {
+  border: 1px dotted gray;
+  padding: 2px;
+}
+</style>
+<script src="lib/getElementsByClassName-1.0.1.js"></script>
+</head>
+<body>
+<h1>toc.js tests</h1>
+<div id="overall"></div>
+
+<div class="test">
+  <h2>Root:</h2>
+  <div class="root">
+    <section class="chapter">
+      <h1 class="title">Title 1</h1>
+    </section>
+    <section class="chapter">
+      <h1 class="title">Title 2</h1>
+    </section>
+  </div>
+
+  <h2>Expected:</h2>
+  <div class="expected">
+    <ol>
+      <li>Title 1</li>
+      <li>Title 2</li>
+    </ol>
+  </div>
+
+  <h2>Actual:</h2>
+  <div class="actual">
+  </div>
+</div>
+
+<div class="test">
+  <h2>Root:</h2>
+  <div class="root">
+    <section>
+      <h1 class="title">Title</h1>
+      <h2 class="subtitle">Subtitle</h2>
+    </section>
+  </div>
+
+  <h2>Expected:</h2>
+  <div class="expected">
+    <ol>
+      <li>Title Subtitle</li>
+    </ol>
+  </div>
+
+  <h2>Actual:</h2>
+  <div class="actual">
+  </div>
+</div>
+
+<!--
+
+<div class="test">
+  <h2>Root:</h2>
+  <div class="root">
+  </div>
+
+  <h2>Expected:</h2>
+  <div class="expected">
+  </div>
+
+  <h2>Actual:</h2>
+  <div class="actual">
+  </div>
+</div>
+
+-->
+
+<script src="../toc.js"></script>
+<script>
+  var tests = getElementsByClassName("test", "div", document);
+  tests.forEach(function(test, i, arr){
+    var root = getElementsByClassName("root", null, test)[0];
+    var actual = getElementsByClassName("actual", null, test)[0];
+    actual.appendChild(buildTOC(root)); 
+  });
+</script>
+<script src="lib/colorTests.js"></script>
+
+</body>
+</html>

@@ -1,16 +1,22 @@
 /* test coloring */
-.pass .actual {
+.pass .actual,
+#overall.pass {
   background-color: #C6E746;
 }
 
-.fail .actual {
+.fail .actual,
+#overall.fail {
   background-color: #FFCACA;
 }
 
-/* overall styles */
+/* general styling */
 body > section {
   margin-bottom: 50px;
   margin-left: 10px;
+}
+
+#overall {
+  padding: 3px;
 }
 
 .test {

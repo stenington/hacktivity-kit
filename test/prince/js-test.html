@@ -2,16 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="stylesheet" href="style.css">
-<script src="../../vendor/getElementsByClassName-1.0.1.js"></script>
+<link rel="stylesheet" href="../lib/colorTests.css">
+<script src="../lib/getElementsByClassName-1.0.1.js"></script>
 </head>
 <body>
 
 <h1>Prince Javascript Tests</h1>
+<div id="overall"></div>
+
 <p>
   <kbd>prince</kbd>'s javascript handling is somewhat limited as of version 8.0. It can't handle 
   <kbd>jQuery</kbd> and lacks some methods and attributes that I'm accustomed to using. This 
-  increases my desire to test while making it harder to find a test framework to use. <kbd>prince</kbd> 
+  increases my desire to test while making it harder to find a test framework to use&mdash;<kbd>prince</kbd> 
   can't handle <kbd>qUnit</kbd>, so a homegrown testing option was needed. 
 </p>
 
@@ -285,74 +287,7 @@ can vary. The "expected" and "actual" classes don't have to be on <p>'s
 but should be present for pass/fail coloring. 
 -->
 
-<script>
-(function(){
-
-  function normalize(value){
-    if( value ){
-      value.replace(/\s+/, '');
-    } 
-    return value;
-  };
-
-  function normalizeChildren(children){
-    var normalized = [];
-    for(var i = 0; i < children.length; i++) {
-      var node = children[i];
-      if( !node ){
-        continue;
-      }
-      if( node.nodeType == 3 && node.nodeValue.match(/^\s*$/) ){
-        continue;
-      }
-      normalized.push(node);
-    }
-    return normalized;
-  }
-     
-  function equals(actual, expected){
-    if( !actual && !expected ) {
-      return true;
-    }
-
-    if( expected.hasChildNodes() ){
-      var expectedKids = normalizeChildren(expected.childNodes);
-      var actualKids = normalizeChildren(actual.childNodes);
-      for(var i = 0; i < expectedKids.length; i++){
-        if( !equals(actualKids[i], expectedKids[i]) ){
-          return false;
-        }
-      }
-    }
-    
-    if( expected.nodeType !== actual.nodeType ){
-      return false;
-    }
-
-    if( expected.nodeValue && actual.nodeValue && expected.nodeValue !== actual.nodeValue ){
-      return false;
-    }
-
-    return true;
-  };
-
-  console.log("\nColoring the tests...");
-  var tests = getElementsByClassName("test", "div", document);
-  tests.forEach(function(test, i, arr){
-    var expected = getElementsByClassName("expected", null, test)[0];
-    var actual = getElementsByClassName("actual", null, test)[0];
-    if( equals(actual, expected) ){
-      console.log("pass");
-      test.className += " pass";
-    }
-    else {
-      console.log("fail");
-      test.className += " fail";
-    }
-  });
-  console.log("done.");
-})();
-</script>
+<script src="../lib/colorTests.js"></script>
 
 </body>
 </html>
