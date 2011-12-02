@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="style.css">
+<script src="../../vendor/getElementsByClassName-1.0.1.js"></script>
+</head>
+<body>
+
+<h1>Prince Javascript Tests</h1>
+<p>
+  <kbd>prince</kbd>'s javascript handling is somewhat limited as of version 8.0. It can't handle 
+  <kbd>jQuery</kbd> and lacks some methods and attributes that I'm accustomed to using. This 
+  increases my desire to test while making it harder to find a test framework to use. <kbd>prince</kbd> 
+  can't handle <kbd>qUnit</kbd>, so a homegrown testing option was needed. 
+</p>
+
+<p>
+  To that end, this file contains a bunch of <strong>exploratory tests</strong> intended to be run through <kbd>prince</kbd>
+  and manually inspected (at this point) for verification. It's a way to learn what <kbd>prince</kbd>
+  can and cannot handle and experiment with workarounds. You can also view this file in a browser to verify that a browser 
+  can in fact handle the same javascript.
+</p>
+
+<aside>
+  Some of these tests may essentially be overkill. It may be enough to simply check for the
+  availability of certain methods or attributes without testing out their functionality, 
+  but for now this is useful as a <strong>sandbox</strong> as well.
+</aside>
+
+<h1>Usage</h1>
+
+<kbd>prince -v --javascript js-test.html</kbd>
+<dl>
+  <dt><kbd>-v</kbd></dt>
+  <dd>verbose output; will show you any <code>console.log()</code> statements</dd>
+  <dt><kbd>--javascript</kbd></dt>
+  <dd>don't forget to turn on javascript!</dd>
+  <dt><kbd>-o <filename></kdb></dt>
+  <dd>if you want to specify the out file</dd>
+</dl>
+
+<p>
+  ...then take a look at <samp>js-test.pdf</samp> (or whatever output name you specified).
+</p>
+
+<h1>Tests</h1>
+
+<section id="forEach">
+  <h2>forEach</h2>
+
+  <div class="test">
+    <p>
+      If <kbd>prince</kbd> supports <code>forEach</code>, then you should see two identical
+      ordered lists below:
+    </p>
+
+    <h3>Expected:</h3>
+    <ol class="expected">
+      <li>One</li>
+      <li>Two</li>
+      <li>Three</li>
+    </ol>
+
+    <h3>Got:</h3>
+    <ol class="actual" id="forEach-actual">
+    </ol>
+
+    <script>
+      console.log("\nStarting forEach...");
+      var arr = ["One", "Two", "Three"];
+      var actual = document.getElementById("forEach-actual");
+      arr.forEach(function(val, i, arr){
+        console.log("processing element " + i + ": " + val);
+        var item = document.createElement("li");
+        var text = document.createTextNode(val);
+        item.appendChild(text);
+        actual.appendChild(item);
+      });
+      console.log("done.");
+    </script>
+  </div>
+</section>
+
+<section id="getElementsByClassName">
+  <h2>getElementsByClassName</h2>
+
+  <div class="test">
+    <p>
+      If <kbd>prince</kbd> supports <code>getElementsByClassName</code>, then you should see
+      the same sentence twice below:
+    </p>
+
+    <h3>Original:</h3>
+    <p class="expected">I should get copied!</p>
+
+    <h3>Copy:</h3>
+    <p id="getElementsByClassName-copy" class="actual">This text should have been replaced. :(</p>
+
+    <script>
+      console.log("\nStarting getElementsByClassName test #1...");
+      var sect = document.getElementById("getElementsByClassName");
+      if( sect.getElementsByClassName ) {
+        var orig = sect.getElementsByClassName("expected")[0];
+        console.log("got " + orig + " from getElementsByClassName");
+        var copy = document.getElementById("getElementsByClassName-copy");
+        copy.firstChild.nodeValue = orig.firstChild.nodeValue;
+      }
+      else {
+        console.log("getElementsByClassName not available");
+      }
+      console.log("done.");
+    </script>
+  </div>
+
+  <div class="test">
+    <p>
+      You should see the next set of sentences collected as shown below:
+    </p>
+
+    <h3>Sentences:</h3>
+    <p class="collect">Hi there.</p>
+    <p class="collect">I'm a sentence.</p>
+    <p class="collect">I should be collected.</p>
+
+    <h3>Expected:</h3>
+    <p class="expected">Hi there. I'm a sentence. I should be collected. </p>
+
+    <h3>Actual:</h3>
+    <p class="actual" id="getElementsByClassName-test2">:(</p>
+
+    <script>
+      console.log("\nStarting getElementsByClassName test #2...");
+      var sect = document.getElementById("getElementsByClassName");
+      if( sect.getElementsByClassName ) {
+        var lines = sect.getElementsByClassName("collect");
+        console.log("got " + lines.length + " lines from getElementsByClassName");
+        var actual = document.getElementById("getElementsByClassName-test2");
+        actual.firstChild.nodeValue = "";
+        for(var i = 0; i < lines.length; i++){
+          actual.firstChild.nodeValue += lines[i].firstChild.nodeValue + " ";
+        }
+      }
+      else {
+        console.log("getElementsByClassName not available");
+      }
+      
+      console.log("done.");
+    </script>
+  </div>
+</section>
+
+<section id="innerHTML">
+  <h2>innerHTML</h2>
+
+  <div class="test">
+    <p>
+      <kbd>prince</kbd> doesn't support <code>innerHTML</code>, to my knowledge. This will
+      show if/when that changes.
+    </p>
+
+    <h3>Source:</h3>
+    <p id="innerHTML-test1-source"><em>Hi</em></p>
+
+    <h3>Expected:</h3>
+    <p class="expected">&lt;em&gt;Hi&lt;/em&gt;</p>
+
+    <h3>Actual:</h3>
+    <p class="actual" id="innerHTML-test1-target">:(</p>
+
+    <script>
+      console.log("\nStarting innerHTML test #1...");
+      var source = document.getElementById("innerHTML-test1-source");
+      var target = document.getElementById("innerHTML-test1-target");
+      if( source.innerHTML ) {
+        target.firstChild.nodeValue = source.innerHTML;
+      }
+      else {
+        console.log("no innerHTML");
+      }
+      console.log("done.");
+    </script>
+  </div>
+  
+</section>
+
+<section id="outerHTML">
+  <h2>outerHTML</h2>
+
+  <div class="test">
+    <p>
+      I'm not sure if <kbd>prince</kbd> supports <code>outerHTML</code>.
+    </p>
+
+    <h3>Source:</h3>
+    <p id="outerHTML-test1-source"><em>Hi</em></p>
+
+    <h3>Expected:</h3>
+    <p class="expected">&lt;em&gt;Hi&lt;/em&gt;</p>
+
+    <h3>Actual:</h3>
+    <p class="actual" id="outerHTML-test1-target">:(</p>
+
+    <script>
+      console.log("\nStarting outerHTML test #1...");
+      var source = document.getElementById("outerHTML-test1-source").firstChild;
+      var target = document.getElementById("outerHTML-test1-target");
+      if( source.outerHTML ) {
+        target.firstChild.nodeValue = source.outerHTML;
+      }
+      else {
+        console.log("no outerHTML");
+      }
+      console.log("done.");
+    </script>
+  </div>
+  
+</section>
+
+<section id="classList">
+  <h2>classList</h2>
+
+  <div class="test">
+
+    <h3>Source:</h3>
+    <p id="classList-test1-source" class="foo bar baz">
+      This sentence has classes <code>foo</code>, <code>bar</code>, and <code>baz</code>.
+    </p>
+
+    <h3>Expected:</h3>
+    <p class="expected">foo bar baz </p>
+
+    <h3>Actual:</h3>
+    <p id="classList-test1-target" class="actual">:(</p>
+
+    <script>
+      console.log("\nStarting classList test #1...");
+      var source = document.getElementById("classList-test1-source");
+      if( source.classList ) {
+        var classes = source.classList;
+        var text = "";
+        for(var i = 0; i < classes.length; i++) {
+          text += classes[i] + " ";
+        }
+        var target = document.getElementById("classList-test1-target");
+        target.firstChild.nodeValue = text;
+      }
+      else {
+        console.log("no classList");
+      }
+      console.log("done.");
+    </script>
+  </div>
+  
+</section>
+
+<!--
+The basic test block looks like this:
+
+<section id="title">
+  <h2>title</h2>
+
+  <div class="test">
+    <p>
+      Explanatory paragraph optional
+    </p>
+
+    <h3>Expected:</h3>
+    <p class="expected"></p>
+
+    <h3>Actual:</h3>
+    <p class="actual"></p>
+
+    <script>
+      console.log("\nStarting section test #1...");
+      Script that performs the test here.
+      console.log("done.");
+    </script>
+  </div>
+  
+</section>
+
+It can have multiple <div class="test"/> elements, and their structure
+can vary. The "expected" and "actual" classes don't have to be on <p>'s
+but should be present for pass/fail coloring. 
+-->
+
+<script>
+(function(){
+
+  function normalize(value){
+    if( value ){
+      value.replace(/\s+/, '');
+    } 
+    return value;
+  };
+
+  function normalizeChildren(children){
+    var normalized = [];
+    for(var i = 0; i < children.length; i++) {
+      var node = children[i];
+      if( !node ){
+        continue;
+      }
+      if( node.nodeType == 3 && node.nodeValue.match(/^\s*$/) ){
+        continue;
+      }
+      normalized.push(node);
+    }
+    return normalized;
+  }
+     
+  function equals(actual, expected){
+    if( !actual && !expected ) {
+      return true;
+    }
+
+    if( expected.hasChildNodes() ){
+      var expectedKids = normalizeChildren(expected.childNodes);
+      var actualKids = normalizeChildren(actual.childNodes);
+      for(var i = 0; i < expectedKids.length; i++){
+        if( !equals(actualKids[i], expectedKids[i]) ){
+          return false;
+        }
+      }
+    }
+    
+    if( expected.nodeType !== actual.nodeType ){
+      return false;
+    }
+
+    if( expected.nodeValue && actual.nodeValue && expected.nodeValue !== actual.nodeValue ){
+      return false;
+    }
+
+    return true;
+  };
+
+  console.log("\nColoring the tests...");
+  var tests = getElementsByClassName("test", "div", document);
+  tests.forEach(function(test, i, arr){
+    var expected = getElementsByClassName("expected", null, test)[0];
+    var actual = getElementsByClassName("actual", null, test)[0];
+    if( equals(actual, expected) ){
+      console.log("pass");
+      test.className += " pass";
+    }
+    else {
+      console.log("fail");
+      test.className += " fail";
+    }
+  });
+  console.log("done.");
+})();
+</script>
+
+</body>
+</html>
