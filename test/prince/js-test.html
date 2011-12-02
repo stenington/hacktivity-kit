@@ -256,6 +256,38 @@
   
 </section>
 
+<section id="id initialization">
+  <h2>id initialization</h2>
+  <p>
+    This one is a bit roundabout and makes me wish for <kbd>qUnit</kbd>.
+    This replicates the circumstances of the bug, however. A string
+    was concatenated with <code>element.id</code> on an element that
+    might not have an id. 
+  </p>
+
+  <div class="test">
+    <h3>Expected:</h3>
+    <p class="expected">abc</p>
+
+    <h3>Actual:</h3>
+    <p class="actual" id="nullsinstrings-test1-actual"></p>
+
+    <h3>Info:</h3>
+    <p>type of <code>noId.id</code> is <code id="nullsinstrings-test1-info"></code></p>
+
+    <script>
+      console.log("\nStarting nulls in strings test #1...");
+      var actual = document.getElementById("nullsinstrings-test1-actual");
+      var noId = document.createElement('div');
+      actual.appendChild(document.createTextNode("abc" + noId.id));
+      var info = document.getElementById("nullsinstrings-test1-info");
+      info.appendChild(document.createTextNode(typeof noId.id));
+      console.log("done.");
+    </script>
+  </div>
+  
+</section>
+
 <!--
 The basic test block looks like this:
 
@@ -271,7 +303,7 @@ The basic test block looks like this:
     <p class="expected"></p>
 
     <h3>Actual:</h3>
-    <p class="actual"></p>
+    <p class="actual" id="title-test1-actual"></p>
 
     <script>
       console.log("\nStarting section test #1...");

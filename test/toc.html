@@ -18,10 +18,10 @@
 <div class="test">
   <h2>Root:</h2>
   <div class="root">
-    <section class="chapter">
+    <section class="chapter" id="id10">
       <h1 class="title">Title 1</h1>
     </section>
-    <section class="chapter">
+    <section class="chapter" id="id11">
       <h1 class="title">Title 2</h1>
     </section>
   </div>
@@ -29,8 +29,8 @@
   <h2>Expected:</h2>
   <div class="expected">
     <ol>
-      <li>Title 1</li>
-      <li>Title 2</li>
+      <li><a href="#id10">Title 1</a></li>
+      <li><a href="#id11">Title 2</a></li>
     </ol>
   </div>
 
@@ -51,7 +51,7 @@
   <h2>Expected:</h2>
   <div class="expected">
     <ol>
-      <li>Title Subtitle</li>
+      <li><a href="#">Title Subtitle</a></li>
     </ol>
   </div>
 
@@ -60,7 +60,30 @@
   </div>
 </div>
 
-<!--
+<div class="test">
+  <h2>Root:</h2>
+  <div class="root">
+    <section>
+      <p class="title">Title</p>
+      <section>
+        <p class="title">Inner title</p>
+      </section>
+    </section>
+  </div>
+
+  <h2>Expected:</h2>
+  <div class="expected">
+    <ol>
+      <li><a href="#">Title</a></li>
+    </ol>
+  </div>
+
+  <h2>Actual:</h2>
+  <div class="actual">
+  </div>
+</div>
+
+<!-- Copy me 
 
 <div class="test">
   <h2>Root:</h2>

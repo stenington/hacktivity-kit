@@ -1,3 +1,10 @@
+/* 
+  Builds a Table Of Contents for the given element.
+
+  For each child node of the root, it creates an item in an 
+  ordered list that links back to the child's id. The link text
+  is taken from child elements with class "title" and optionally "subtitle".
+*/
 
 function buildTOC(root) {
   var toc = document.createElement('ol');
@@ -15,8 +22,12 @@ function buildTOC(root) {
         text += " " + subtitles[0].firstChild.nodeValue;
       }
       var toc_line = document.createElement('li');
+      var link = document.createElement('a');
+      var id = child.id || "";
+      link.setAttribute('href', '#' + id);
       var toc_text = document.createTextNode(text);
-      toc_line.appendChild(toc_text);
+      toc_line.appendChild(link);
+      link.appendChild(toc_text);
       toc.appendChild(toc_line);
     }
   }

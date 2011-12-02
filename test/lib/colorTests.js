@@ -11,7 +11,7 @@
       value.replace(/\s+/, '');
     } 
     return value;
-  };
+  }
 
   function normalizeChildren(children){
     var normalized = [];
@@ -28,9 +28,34 @@
     return normalized;
   }
      
+  function nodeLooksLike(actual, expected) {
+    if( expected.nodeType !== actual.nodeType ){
+      console.log("expected nodeType: " + expected.nodeType + ", got nodeType: " + actual.nodeType);
+      return false;
+    }
+
+    if( expected.nodeValue && actual.nodeValue && expected.nodeValue !== actual.nodeValue ){
+      console.log("expected nodeValue: " + expected.nodeValue + ", got nodeValue: " + actual.nodeValue);
+      return false;
+    }
+
+    if( expected.hasAttribute && expected.hasAttribute('href') ){
+      if( !actual.hasAttribute('href') || expected.getAttribute('href') !== actual.getAttribute('href') ){
+        console.log("expected href: [" + expected.getAttribute('href') + "], got href: [" + actual.getAttribute('href') + "]");
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   function looksLike(actual, expected){
     if( !actual && !expected ) {
       return true;
+    } 
+    else if( !actual || !expected ) {
+      console.log("expected " + expected + ", got " + actual);
+      return false;
     }
 
     if( expected.hasChildNodes() ){
@@ -43,16 +68,8 @@
       }
     }
     
-    if( expected.nodeType !== actual.nodeType ){
-      return false;
-    }
-
-    if( expected.nodeValue && actual.nodeValue && expected.nodeValue !== actual.nodeValue ){
-      return false;
-    }
-
-    return true;
-  };
+    return nodeLooksLike(expected, actual);
+  }
 
   console.log("\nColoring the tests...");
   var tests = getElementsByClassName("test", "div", document);
