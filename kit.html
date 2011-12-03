@@ -281,42 +281,14 @@ the expectations going into the jam. Reinforce this with publicity efforts and m
   </section>
 </section>
 
+<script src="lib/getElementsByClassName-1.0.1.js"></script>
+<script src="toc.js"></script>
 <script type="text/javascript">
 
 if(document.body.hasChildNodes()) {
   
-  var toc_section = document.createElement("section");
-  var toc = document.createElement("ol");
-  toc_section.appendChild(toc);
-  
-  var children = document.body.childNodes;
-  for(var i = 0; i < children.length; i++) {
-    var child = children[i];
-    if( child.nodeType == 1 && child.classList ) {
-      console.log("ok, in child with className " + child.className);
-      if( typeof child.id === 'undefined' || !child.id ){
-        child.id = "child" + i;
-      }
-      var text = "foo for now";
-      /*var titles = child.getElementsByClassName("title");
-      if( titles.length > 0 ){
-        text += titles[0].firstChild.nodeValue;
-      }
-      var subtitles = child.getElementsByClassName("subtitle");
-      if( subtitles.length > 0 ){
-        text += " " + subtitles[0].firstChild.nodeValue;
-      } */
-      console.log(text);
-      var toc_el = document.createElement("li");
-      var toc_link = document.createElement("a");
-      toc_link.setAttribute("href", "#" + child.id);
-      var toc_text = document.createTextNode(text);
-      toc_link.appendChild(toc_text);
-      toc_el.appendChild(toc_link);
-      toc.appendChild(toc_el);
-    }
-  }
-  document.body.insertBefore(toc_section, document.body.firstChild);
+  var toc = buildTOC(document.body);
+  document.body.insertBefore(toc, document.body.firstChild);
 }
 </script>
 </body>

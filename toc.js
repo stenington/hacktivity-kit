@@ -19,30 +19,45 @@
     }
     return false;
   }
+
+  function getTextFrom(className, parentEl) {
+    var els = getElementsByClassName(className, null, parentEl);
+    if( els.length > 0 ){
+      return els[0].firstChild.nodeValue;
+    }
+    return "";
+  }
+
+  function makeUniqueId(i) {
+    return "toc" + tocCount + "-chapter" + i;
+  }
+
+  function buildTocItem(node, i) {
+    var text = getTextFrom("title", node); 
+    if(getTextFrom("subtitle", node)){
+      text += " " + getTextFrom("subtitle", node);
+    }
+
+    node.id = node.id || makeUniqueId(i);
+
+    var toc_line = document.createElement('li');
+    var link = document.createElement('a');
+    link.setAttribute('href', '#' + node.id);
+    var toc_text = document.createTextNode(text);
+    toc_line.appendChild(link);
+    link.appendChild(toc_text);
+    return toc_line;
+  }
+      
   function buildTOC(root) {
     tocCount++;
     var toc = document.createElement('ol');
+    toc.className = "toc";
     var children = root.childNodes;
     for(var i = 0; i < children.length; i++) {
       var child = children[i];
       if( includeNode(child) ){
-        var text = "";
-        var titles = getElementsByClassName("title", null, child);
-        if( titles.length > 0 ){
-          text += titles[0].firstChild.nodeValue;
-        }
-        var subtitles = getElementsByClassName("subtitle", null, child);
-        if( subtitles.length > 0 ){
-          text += " " + subtitles[0].firstChild.nodeValue;
-        }
-        var toc_line = document.createElement('li');
-        var link = document.createElement('a');
-        child.id = child.id || "toc" + tocCount + "-chapter" + i;
-        link.setAttribute('href', '#' + child.id);
-        var toc_text = document.createTextNode(text);
-        toc_line.appendChild(link);
-        link.appendChild(toc_text);
-        toc.appendChild(toc_line);
+        toc.appendChild(buildTocItem(child, i));
       }
     }
     return toc;

@@ -4,15 +4,15 @@
   Publish results to #overall.
 
   Note: Keep this code prince-safe!
+
+  TODO: Is there a requires mechanism prince is ok with? This script 
+  requires getElementsByClassName, but prince can't handle require.js.
 */
 (function(){
-  function normalize(value){
-    if( value ){
-      value.replace(/\s+/, '');
-    } 
-    return value;
-  }
 
+  /* TODO: Rename/rewrite. Will it normalize the children of the node passed in, or accept
+     a list of children to normalize? Also consider normalizing the whole tree and calling once.
+  */
   function normalizeChildren(children){
     var normalized = [];
     for(var i = 0; i < children.length; i++) {
@@ -30,6 +30,7 @@
      
   function nodeLooksLike(actual, expected) {
     if( expected.nodeType !== actual.nodeType ){
+      /* TODO: extract a utility method or something? */
       console.log("expected nodeType: " + expected.nodeType + ", got nodeType: " + actual.nodeType);
       return false;
     }
@@ -39,17 +40,21 @@
       return false;
     }
 
-    /* Only check for href's if they're defined on the expected node */
-    if( expected.hasAttribute && expected.hasAttribute('href') ){
-      /* href="*" means the actual must have an href, but it can be anything */
-      if( expected.getAttribute('href') === '*' ){
-        if( !(actual.hasAttribute && actual.hasAttribute('href')) ){
+    /* Only check for listed attributes if they're defined on the expected node */
+    var attrs = ['href', 'class'];
+    for(var i = 0; i < attrs.length; i++){
+      var attr = attrs[i];
+      if( expected.hasAttribute && expected.hasAttribute(attr) ){
+        /* expected attribute of "*" means the actual must have the attribute, but it can be anything */
+        if( expected.getAttribute(attr) === '*' ){
+          if( !(actual.hasAttribute && actual.hasAttribute(attr)) ){
+            return false;
+          }
+        }
+        else if( !actual.hasAttribute(attr) || expected.getAttribute(attr) !== actual.getAttribute(attr) ){
+          console.log("expected " + attr + ": [" + expected.getAttribute(attr) + "], got " + attr + ": [" + actual.getAttribute(attr) + "]");
           return false;
         }
-      }
-      else if( !actual.hasAttribute('href') || expected.getAttribute('href') !== actual.getAttribute('href') ){
-        console.log("expected href: [" + expected.getAttribute('href') + "], got href: [" + actual.getAttribute('href') + "]");
-        return false;
       }
     }
 
@@ -82,13 +87,29 @@
     return nodeLooksLike(actual, expected);
   }
 
+  /* TODO: rewrite? This seems janky. Why do we need to introduce this weird clean top-level root? 
+  */
+  function contentsLookAlike(actualContainer, expectedContainer){
+    var actuals = normalizeChildren(actualContainer.childNodes);
+    var expecteds = normalizeChildren(expectedContainer.childNodes);
+    var actualsRoot = document.createElement('div');
+    var expectedsRoot = actualsRoot.cloneNode(false);
+    for(var i = 0; i < actuals.length; i++){
+      actualsRoot.appendChild(actuals[i]);
+    }
+    for(var i = 0; i < expecteds.length; i++){
+      expectedsRoot.appendChild(expecteds[i]);
+    }
+    return looksLike(actualsRoot, expectedsRoot);
+  }
+
   console.log("\nColoring the tests...");
   var tests = getElementsByClassName("test", "div", document);
   var failCount = 0;
   tests.forEach(function(test, i, arr){
-    var expected = getElementsByClassName("expected", null, test)[0];
-    var actual = getElementsByClassName("actual", null, test)[0];
-    if( looksLike(actual, expected) ){
+    var expectedContainer = getElementsByClassName("expected", null, test)[0].cloneNode(true);
+    var actualContainer = getElementsByClassName("actual", null, test)[0].cloneNode(true);
+    if( contentsLookAlike(actualContainer, expectedContainer) ){
       test.className += " pass";
     }
     else {
