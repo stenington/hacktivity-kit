@@ -27,22 +27,21 @@ tests should be viewed in both a browser *and* converted to PDF to ensure compat
 scenarios. However Prince can't handle libraries like jQuery or QUnit, so this becomes a challenge.
 
 See <kbd>hacktivity-kit/test/toc.html</kbd> for an example of how we're approaching this for now with
-colorTests. View it in a browser, and run it through Prince with: 
+looksLike. View it in a browser, and run it through Prince with: 
 
     prince -v --javascript toc.html
 
-### colorTests
+### looksLike
 
-As an experiment, the current hacktivity tests make use of colorTests.js which is Prince-safe and 
+As an experiment, the current hacktivity tests make use of looksLike.js which is Prince-safe and 
 should be kept so. 
 
-When included, colorTests iterates through all the <code>.test</code> elements
+When included, looksLike iterates through all the <code>.test</code> elements
 in the DOM, comparing a <code>.expected</code> to a <code>.actual</code> element for "visual"
 equality and coloring red for fail and green for pass. The final result is reported in a 
 <code>#overall</code> element, if included. 
 
 "Visual" equality in this case means the same HTML elements and text contents. There's limited support
-for attribute checking as well. See the code in <kbd>hacktivity-kit/test/lib/colorTests.js</kbd> for
-more details.
+for attribute checking as well. See the code for more details.
 
 
