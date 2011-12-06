@@ -20,6 +20,10 @@ at the terminal prompt:
 This creates <samp>kit.pdf</samp> that you can open with your
 favorite PDF viewer. 
 
+Prince may report errors like: 
+    prince: kit.html:9: error: Tag section invalid<
+These don't affect processing and should disappear with upcoming releases of Prince.
+
 ## Testing
 
 Prince does not offer as full-featured support for JavaScript as modern browsers do. Ideally, all 
