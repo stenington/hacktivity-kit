@@ -1,6 +1,6 @@
 /* Pagination */
 
-#cover, .toc { page-break-after: always; }
+#cover, #toc { page-break-after: always; }
 
 .chapter { page-break-before: always; }
 
@@ -15,7 +15,7 @@ h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
 
 /* TOC */
 
-.toc a[href]:after {
+#toc a[href]:after {
 	content: leader('.') target-counter(attr(href), page);
 }
 

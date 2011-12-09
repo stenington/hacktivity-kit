@@ -76,7 +76,9 @@ else {
       fs.readFile(infile, function(err, contents){
         if (err) throw err;
         makeStatic(contents, url, function(window){
-          fs.writeFile(outfile, window.document.outerHTML, function(err){
+          var doc = window.document.doctype.toString();
+          doc += window.document.innerHTML;
+          fs.writeFile(outfile, doc, function(err){
             if (err) throw err;
             console.log(outfile + " written.");
           });
