@@ -5,47 +5,49 @@ This is the content for the [hackasaurus.org][] hacktivity kit.
 
 ## Prerequisites
 
+### Conversion toolchain
+
+Prince does not offer as full-featured support for JavaScript as modern browsers do. To
+allow the use of libraries like jQuery (which Prince currently cannot handle) the files
+get "compiled" into static HTML before feeding them to Prince.
+
+#### jsdom
+
+vandegraaff.js is a node.js script that uses [jsdom][] to load the page, allow any initial 
+JavaScript to run, and dump a static HTML version out. This gets sent to...
+
+  [jsdom]: https://github.com/tmpvar/jsdom
+
+#### tidy-html5
+
+jsdom writes HTML, but Prince wants XHTML. [tidy-html5][] does that conversion, and the output is
+ready for...
+
+  [tidy-html5]: https://github.com/w3c/tidy-html5
+
+#### Prince
+
 You need [Prince 8.0][] to generate the PDF version of the kit. The free version is fine.
 
   [Prince 8.0]: http://www.princexml.com/download/
 
-## Setup
+## Sample command
 
-The web version of the kit is simple HTML, CSS and JavaScript. To generate the PDF version, run this
-at the terminal prompt:
-
-    cd hacktivity-kit
-    prince --javascript --style=print.css kit.html
+    cat kit.html | node vandegraaff.js | tidy -utf8 -asxhtml | prince -s print.css -o kit.pdf -
 
 This creates <samp>kit.pdf</samp> that you can open with your
 favorite PDF viewer. 
 
-Prince may report errors like: 
+With <kbd>-v</kbd>, Prince may report errors like: 
     prince: kit.html:9: error: Tag section invalid<
 These don't affect processing and should disappear with upcoming releases of Prince.
 
 ## Testing
 
-Prince does not offer as full-featured support for JavaScript as modern browsers do. Ideally, all 
-tests should be viewed in both a browser *and* converted to PDF to ensure compatability in both
-scenarios. However Prince can't handle libraries like jQuery or QUnit, so this becomes a challenge.
+Ideally, all tests should be viewed in both a browser *and* converted to PDF to ensure compatability in both
+scenarios. The strategy above should work for [QUnit][] pages, which can be compiled to static HTML and
+viewed in a browser for pass/fail status.
 
-See <kbd>hacktivity-kit/test/toc.html</kbd> for an example of how we're approaching this for now with
-looksLike. View it in a browser, and run it through Prince with: 
-
-    prince -v --javascript toc.html
-
-### looksLike
-
-As an experiment, the current hacktivity tests make use of looksLike.js which is Prince-safe and 
-should be kept so. 
-
-When included, looksLike iterates through all the <code>.test</code> elements
-in the DOM, comparing a <code>.expected</code> to a <code>.actual</code> element for "visual"
-equality and coloring red for fail and green for pass. The final result is reported in a 
-<code>#overall</code> element, if included. 
-
-"Visual" equality in this case means the same HTML elements and text contents. There's limited support
-for attribute checking as well. See the code for more details.
+  [QUnit]: http://docs.jquery.com/QUnit
 
 

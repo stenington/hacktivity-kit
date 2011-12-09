@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*    _
  *   (_)v^o
  *    |   |   vandegraaff.js - make static
