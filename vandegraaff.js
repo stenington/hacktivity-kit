@@ -49,6 +49,12 @@ function makeStatic(html, base, callback){
   });
 }
 
+function dumpDocument(window){
+  var doc = window.document.doctype.toString();
+  doc += window.document.innerHTML;
+  process.stdout.write(doc);
+}
+
 /*
  * Main
  */
@@ -60,29 +66,19 @@ if( process.argv.length == 2 ){
     contents += chunk; 
   });
   process.stdin.on('end', function(){
-    makeStatic(contents, null, function(window){
-      process.stdout.write(window.document.innerHTML);
-    });
+    makeStatic(contents, null, dumpDocument); 
   });
 }
 else {
-  // Batch mode
+  // Batch mode - arguably not useful for more than one file though
   for( var i = 2; i < process.argv.length; i++ ){
     (function(){
       var infile = process.argv[i];
-      var outfile = path.basename(infile, path.extname(infile)) + '.out' + path.extname(infile);
       var url = path.resolve(infile);
 
       fs.readFile(infile, function(err, contents){
         if (err) throw err;
-        makeStatic(contents, url, function(window){
-          var doc = window.document.doctype.toString();
-          doc += window.document.innerHTML;
-          fs.writeFile(outfile, doc, function(err){
-            if (err) throw err;
-            console.log(outfile + " written.");
-          });
-        });
+        makeStatic(contents, url, dumpDocument);
       });
     })();
   }
