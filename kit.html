@@ -3,10 +3,14 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
   <title>Hacktivity Kit</title>         
-  <link rel="stylesheet" type="text/css" href="style.css"/>  
+  <link rel="stylesheet" type="text/css" href="http://hackasaurus.org/stylesheets/normalize.css"/>             
+  <link rel="stylesheet" type="text/css" href="http://hackasaurus.org/stylesheets/base.css"/>  
 </head>
 <body>
-
+        
+<div id="header-and-content">   
+<section id="content">
+<div class="wrapper">
 <section class="chapter">
   <header>
     <h1 class="title">Introduction</h1>
@@ -716,9 +720,13 @@ the expectations going into the jam. Reinforce this with publicity efforts and m
   <h1 class="title">Resources</h1>
 </section>
 
+</div>  
+</section>
+</div>
+
 <script src="jquery.min.js"></script>
 <script>
-$('body').prepend('<ol id="toc"></ol>');
+$('.wrapper').prepend('<ol id="toc"></ol>');
 $('.chapter').each(function(index, chapter){
   var title = $(chapter).find('.title').html();
   var subtitle = $(chapter).find('.subtitle').html();
