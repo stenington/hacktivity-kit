@@ -4,7 +4,9 @@
 
 .chapter { page-break-before: always; }
 
-.chapter > section { page-break-inside: avoid; }
+.chapter > section { 
+  page-break-inside: avoid;
+}
 
 pre { 
   page-break-inside: avoid;
@@ -21,8 +23,25 @@ h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
 
 /* Headers & Footers */
 
-@page {
+@page {   
+  
+  size: 8.5in 11in;
+  margin: .5in;
+  
   @bottom-left {
     content: "© 2011 by individual mozilla.org contributors. Content available under a Creative Commons license. http://www.mozilla.org/foundation/licensing/website-content.html";
   }
+}       
+
+@page:first {
+  border: 10px solid #2FC6E8;
+  border-radius: 32px;
+}     
+
+.chapter#intro {
+  border: 0px;
+}    
+
+#cover, #toc, .chapter {
+  page-group: start;
 }

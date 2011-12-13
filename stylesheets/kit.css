@@ -1,0 +1,17 @@
+.chapter {
+  border-left:3px solid #2FC6E8;
+  padding: 0 0 15px 10px;
+  margin-bottom: 40px;
+}                        
+
+#main-column {
+  margin-left:150px;
+  padding-left: 10px;
+}          
+
+h1 {                
+  position: absolute;
+  margin-left: -170px;
+  width: 150px;      
+  text-align: right;
+}

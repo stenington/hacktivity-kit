@@ -4,14 +4,21 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
   <title>Hacktivity Kit</title>         
   <link rel="stylesheet" type="text/css" href="http://hackasaurus.org/stylesheets/normalize.css"/>             
-  <link rel="stylesheet" type="text/css" href="http://hackasaurus.org/stylesheets/base.css"/>  
+  <link rel="stylesheet" type="text/css" href="http://hackasaurus.org/stylesheets/base.css"/>
+  <link rel="stylesheet" type="text/css" href="stylesheets/kit.css"/>    
 </head>
 <body>
         
 <div id="header-and-content">   
 <section id="content">
-<div class="wrapper">
-<section class="chapter">
+<div class="wrapper">   
+<div id="main-column">   
+<section id="cover">
+  Cover.
+</section>
+<section id="toc">
+</section>
+<section id="intro">
   <header>
     <h1 class="title">Introduction</h1>
   </header>
@@ -719,21 +726,22 @@ the expectations going into the jam. Reinforce this with publicity efforts and m
 <section class="chapter" id="resources">
   <h1 class="title">Resources</h1>
 </section>
-
+   
+</div>
 </div>  
 </section>
 </div>
 
 <script src="jquery.min.js"></script>
 <script>
-$('.wrapper').prepend('<ol id="toc"></ol>');
+$('#toc').append('<ol id="toc-list"></ol>');
 $('.chapter').each(function(index, chapter){
   var title = $(chapter).find('.title').html();
   var subtitle = $(chapter).find('.subtitle').html();
   var text = title;
   if (subtitle) text += ' ' + subtitle;
 
-  var item = $('<li></li>').appendTo('#toc');
+  var item = $('<li></li>').appendTo('#toc-list');
   var link = $('<a></a>').appendTo(item);
   link.html(text);
   if (!$(chapter).attr('id')) $(chapter).attr('id', 'chapter' + index);
