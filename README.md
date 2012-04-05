@@ -33,13 +33,15 @@ You need [Prince 8.0][] to generate the PDF version of the kit. The free version
 
 ## Sample command
 
-    cat kit.html | node vandegraaff.js | tidy -utf8 -asxhtml | prince -s print.css -o kit.pdf -
+    cat kit.html | node vandegraaff.js | tidy -utf8 -asxhtml | prince -s stylesheets/print.css -o kit.pdf -
 
 This creates <samp>kit.pdf</samp> that you can open with your
 favorite PDF viewer. 
 
 With <kbd>-v</kbd>, Prince may report errors like: 
+
     prince: kit.html:9: error: Tag section invalid<
+
 These don't affect processing and should disappear with upcoming releases of Prince.
 
 ## Testing
