@@ -1,0 +1,9 @@
+{ "name": "hacktivity-kit"
+, "description": "HTML Hackasaurus event documentation and PDF toolchain."
+, "version": "0.0.1"
+, "private": true
+, "dependencies":
+  { "jsdom": "0.2.x" }
+, "engines":
+  { "node":  "*" }
+}
