@@ -18,13 +18,6 @@ JavaScript to run, and dump a static HTML version out. This gets sent to...
 
   [jsdom]: https://github.com/tmpvar/jsdom
 
-#### tidy-html5
-
-jsdom writes HTML, but Prince wants XHTML. [tidy-html5][] does that conversion, and the output is
-ready for...
-
-  [tidy-html5]: https://github.com/w3c/tidy-html5
-
 #### Prince
 
 You need [Prince 8.0][] to generate the PDF version of the kit. The free version is fine.
@@ -33,13 +26,15 @@ You need [Prince 8.0][] to generate the PDF version of the kit. The free version
 
 ## Sample command
 
-    cat kit.html | node vandegraaff.js | tidy -utf8 -asxhtml | prince -s print.css -o kit.pdf -
+    cat kit.html | node vandegraaff.js | prince -s stylesheets/print.css -o kit.pdf -
 
 This creates <samp>kit.pdf</samp> that you can open with your
 favorite PDF viewer. 
 
 With <kbd>-v</kbd>, Prince may report errors like: 
+
     prince: kit.html:9: error: Tag section invalid<
+
 These don't affect processing and should disappear with upcoming releases of Prince.
 
 ## Testing

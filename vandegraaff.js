@@ -47,10 +47,53 @@ function makeStatic(html, base, callback){
   });
 }
 
-function dumpDocument(window){
-  var doc = window.document.doctype.toString();
-  doc += window.document.innerHTML;
-  process.stdout.write(doc);
+function escapeXML(text) {
+  // http://stackoverflow.com/questions/1091945/where-can-i-get-a-list-of-the-xml-document-escape-characters
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;")
+    .replace(/\</g, "&lt;")
+    .replace(/\>/g, "&gt;");
+}
+
+function writeXMLElement(out, element) {
+  var tagName = element.nodeName.toLowerCase(),
+      i;
+  out.write('<' + tagName);
+  for (i = 0; i < element.attributes.length; i++) {
+    var attr = element.attributes[i];
+    out.write(' ' + attr.nodeName + '="' + escapeXML(attr.nodeValue) + '"');
+  }
+  if (element.childNodes.length) {
+    out.write('>');
+    for (i = 0; i < element.childNodes.length; i++) {
+      var child = element.childNodes[i];
+      if (child.nodeType == child.TEXT_NODE) {
+        out.write(escapeXML(child.nodeValue));
+      } else if (child.nodeType == child.ELEMENT_NODE) {
+        writeXMLElement(out, child);
+      } else {
+        // TODO: Any other major element types to include in here?
+        // Note that node types are enumerated at:
+        // https://developer.mozilla.org/en/DOM/Node#Constants
+        process.stderr.write("Ignoring node type " + child.nodeType + ".\n");
+      }
+    }
+    out.write('</' + tagName + '>');
+  } else {
+    out.write('/>');
+  }
+}
+
+// jsdom writes HTML, but Prince wants XHTML, so we convert here.
+function dumpXHTMLDocument(window){
+  var out = process.stdout;
+  var html = window.document.documentElement;
+  
+  html.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
+  out.write('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n');
+  writeXMLElement(out, html);
 }
 
 /*
@@ -64,7 +107,7 @@ if( process.argv.length == 2 ){
     contents += chunk; 
   });
   process.stdin.on('end', function(){
-    makeStatic(contents, null, dumpDocument); 
+    makeStatic(contents, null, dumpXHTMLDocument); 
   });
 }
 else {
@@ -76,7 +119,7 @@ else {
 
       fs.readFile(infile, function(err, contents){
         if (err) throw err;
-        makeStatic(contents, url, dumpDocument);
+        makeStatic(contents, url, dumpXHTMLDocument);
       });
     })();
   }
